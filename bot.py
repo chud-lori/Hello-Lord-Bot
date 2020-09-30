@@ -23,12 +23,16 @@ ranb = [i for i in range(120, 5000)]
 
 def start(update, context):
     """Send a message when the command /start is issued."""
-    update.message.reply_text('Hi!')
+    update.message.reply_text('''
+    Hi!
+    This bot was developed by Lori
+    Enjoy the Lord's images
+    ''')
 
 
 def help(update, context):
     """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
+    update.message.reply_text("Type: /lord to see lord's images")
 
 
 def echo(update, context):
@@ -46,7 +50,7 @@ def get_url():
     url = contents['url']
     return url
 
-def bop(update, context):
+def lord(update, context):
     # url = get_url()
     url = 'https://placekitten.com/g/{}/{}'.format(random.choice(rana), random.choice(ranb))
     chat_id = update.message.chat_id
@@ -55,7 +59,7 @@ def bop(update, context):
 # def main():
 #     updater = Updater()
 #     dp = updater.dispatcher
-#     dp.add_handler(CommandHandler('bop',bop))
+#     dp.add_handler(CommandHandler('lord',lord))
 #     updater.start_polling()
 #     updater.idle()
 
@@ -73,7 +77,7 @@ def main():
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(CommandHandler("bop", bop))
+    dp.add_handler(CommandHandler("lord", lord))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
