@@ -30,6 +30,7 @@ def help(update, context):
 
 def echo(update, context):
     """Echo the user message."""
+    update.message.reply_text(context)
     update.message.reply_text(update.message.text)
 
 
@@ -42,12 +43,11 @@ def get_url():
     url = contents['url']
     return url
 
-def bop(bot, update):
+def bop(update, context):
     url = get_url()
-    update.message.reply_text('Send dog picture! Before' + url)
-    chat_id = update.message.chat_id
     update.message.reply_text('Send dog picture!' + url)
-    bot.send_photo(chat_id=chat_id, photo=url)
+    chat_id = update.message.chat_id
+    context.bot.send_photo(chat_id=chat_id, photo=url)
 
 # def main():
 #     updater = Updater()
