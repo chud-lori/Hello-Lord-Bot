@@ -3,6 +3,7 @@ import requests
 import re
 import os
 import logging
+import random
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -14,9 +15,11 @@ PORT = int(os.environ.get('PORT', '8443'))
 APP_NAME = 'https://hello-bot-lord.herokuapp.com/';
 TOKEN = '1153988356:AAEpUdFs3C-I1Wz7F7yTF8bJDiJLp3EA2ac'
 
+rana = [i for i in range(120, 5000)]
+ranb = [i for i in range(120, 5000)]
 
-contents = requests.get('https://random.dog/woof.json').json()
-image_url = contents['url']
+# contents = requests.get('https://random.dog/woof.json').json()
+# image_url = contents['url']
 
 def start(update, context):
     """Send a message when the command /start is issued."""
@@ -44,8 +47,8 @@ def get_url():
     return url
 
 def bop(update, context):
-    url = get_url()
-    update.message.reply_text('Send dog picture!' + url)
+    # url = get_url()
+    url = 'https://placekitten.com/g/{}/{}'.format(random.choice(rana), random.choice(ranb))
     chat_id = update.message.chat_id
     context.bot.send_photo(chat_id=chat_id, photo=url)
 
