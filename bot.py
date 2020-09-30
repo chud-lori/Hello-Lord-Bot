@@ -26,13 +26,18 @@ def start(update, context):
     update.message.reply_text('''
     Hi!
     This bot was developed by Lori
+    type /help to see how use it
     Enjoy the Lord's images
     ''')
 
 
 def help(update, context):
     """Send a message when the command /help is issued."""
-    update.message.reply_text("Type: /lord to see lord's images")
+    update.message.reply_text("""
+    Type: 
+        /lord to see lord's images
+        /woof to see woof's images
+    """)
 
 
 def echo(update, context):
@@ -45,13 +50,17 @@ def error(update, context):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
-def get_url():
+def woof_get_url():
     contents = requests.get('https://random.dog/woof.json').json()    
     url = contents['url']
     return url
 
+def woof(update, context):
+    url = get_url()
+    chat_id = update.message.chat_id
+    context.bot.send_photo(chat_id=chat_id, photo=url)
+
 def lord(update, context):
-    # url = get_url()
     url = 'https://placekitten.com/g/{}/{}'.format(random.choice(rana), random.choice(ranb))
     chat_id = update.message.chat_id
     context.bot.send_photo(chat_id=chat_id, photo=url)
@@ -78,6 +87,7 @@ def main():
     dp.add_handler(CommandHandler("start", start))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("lord", lord))
+    dp.add_handler(CommandHandler("woof", woof))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
