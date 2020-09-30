@@ -44,6 +44,7 @@ def get_url():
 
 def bop(bot, update):
     url = get_url()
+    update.message.reply_text('Send dog picture! Before' + url)
     chat_id = update.message.chat_id
     update.message.reply_text('Send dog picture!' + url)
     bot.send_photo(chat_id=chat_id, photo=url)
