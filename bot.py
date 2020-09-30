@@ -56,7 +56,7 @@ def woof_get_url():
     return url
 
 def woof(update, context):
-    url = get_url()
+    url = woof_get_url()
     chat_id = update.message.chat_id
     context.bot.send_photo(chat_id=chat_id, photo=url)
 
