@@ -1,9 +1,12 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import requests
-import re
+"""
+Bot system
+"""
+
 import os
-import logging
 import random
+import logging
+import requests
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -12,16 +15,14 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 PORT = int(os.environ.get('PORT', '8443'))
-APP_NAME = 'https://hello-bot-lord.herokuapp.com/';
+APP_NAME = 'https://hello-bot-lord.herokuapp.com/'
 TOKEN = '1153988356:AAEpUdFs3C-I1Wz7F7yTF8bJDiJLp3EA2ac'
 
-rana = [i for i in range(120, 5000)]
-ranb = [i for i in range(120, 5000)]
+# randomize cat images
+rana = [i for i in range(120, 5000)] # pylint: disable=unnecessary-comprehension
+ranb = [i for i in range(120, 5000)] # pylint: disable=unnecessary-comprehension
 
-# contents = requests.get('https://random.dog/woof.json').json()
-# image_url = contents['url']
-
-def start(update, context):
+def start(update, context): # pylint: disable=unused-argument
     """Send a message when the command /start is issued."""
     update.message.reply_text('''
     Hi!
@@ -31,7 +32,7 @@ def start(update, context):
     ''')
 
 
-def help(update, context):
+def help(update, context): # pylint: disable=unused-argument, redefined-builtin
     """Send a message when the command /help is issued."""
     update.message.reply_text("""
     Type: 
@@ -51,16 +52,19 @@ def error(update, context):
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
 def woof_get_url():
-    contents = requests.get('https://random.dog/woof.json').json()    
+    """Get image from random.dog."""
+    contents = requests.get('https://random.dog/woof.json').json()
     url = contents['url']
     return url
 
 def woof(update, context):
+    """Send a random dog images."""
     url = woof_get_url()
     chat_id = update.message.chat_id
     context.bot.send_photo(chat_id=chat_id, photo=url)
 
 def lord(update, context):
+    """Send a random cat images."""
     url = 'https://placekitten.com/g/{}/{}'.format(random.choice(rana), random.choice(ranb))
     chat_id = update.message.chat_id
     context.bot.send_photo(chat_id=chat_id, photo=url)
@@ -81,7 +85,7 @@ def main():
         TOKEN, use_context=True)
 
     # Get the dispatcher to register handlers
-    dp = updater.dispatcher
+    dp = updater.dispatcher # pylint: disable=invalid-name
 
     # on different commands - answer in Telegram
     dp.add_handler(CommandHandler("start", start))
