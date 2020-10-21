@@ -15,8 +15,8 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 PORT = int(os.environ.get('PORT', '8443'))
-APP_NAME = 'https://hello-bot-lord.herokuapp.com/'
-TOKEN = '1153988356:AAEpUdFs3C-I1Wz7F7yTF8bJDiJLp3EA2ac'
+APP_NAME = # Host
+TOKEN = # Bot token
 
 # randomize cat images
 rana = [i for i in range(120, 5000)] # pylint: disable=unnecessary-comprehension
