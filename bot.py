@@ -15,8 +15,8 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 PORT = int(os.environ.get('PORT', '8443'))
-APP_NAME = # Host
-TOKEN = # Bot token
+APP_NAME = 'https://hello-bot-lord.herokuapp.com/'
+TOKEN = '1153988356:AAEpUdFs3C-I1Wz7F7yTF8bJDiJLp3EA2ac'
 
 # randomize cat images
 rana = [i for i in range(120, 5000)] # pylint: disable=unnecessary-comprehension
@@ -38,6 +38,7 @@ def help(update, context): # pylint: disable=unused-argument, redefined-builtin
     Type: 
         /lord to see lord's images
         /woof to see woof's images
+        /advice to get advice from Lord
     """)
 
 
@@ -69,6 +70,12 @@ def lord(update, context):
     chat_id = update.message.chat_id
     context.bot.send_photo(chat_id=chat_id, photo=url)
 
+def advice(update, context):
+    """Send a random advice"""
+    url = requests.get('https://api.adviceslip.com/advice').json()
+    update.message.reply_text(url['slip']['advice'])
+
+
 # def main():
 #     updater = Updater()
 #     dp = updater.dispatcher
@@ -92,6 +99,7 @@ def main():
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("lord", lord))
     dp.add_handler(CommandHandler("woof", woof))
+    dp.add_handler(CommandHandler("advice", advice))
 
     # on noncommand i.e message - echo the message on Telegram
     dp.add_handler(MessageHandler(Filters.text, echo))
