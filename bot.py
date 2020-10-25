@@ -73,7 +73,12 @@ def lord(update, context):
 def advice(update, context):
     """Send a random advice"""
     url = requests.get('https://api.adviceslip.com/advice').json()
-    update.message.reply_text(url['slip']['advice'])
+    advice = url['slip']['advice']
+    send = f"""
+    Lord's advice:
+    {advice}
+    """
+    update.message.reply_text(send)
 
 
 # def main():
